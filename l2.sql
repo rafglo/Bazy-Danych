@@ -98,5 +98,146 @@ LIMIT 1;
 
 --2.10
 -- Znaleźć ile sztuk tego filmu jest dostępnych i w których naszych placówkach.
-SELECT COUNT(inventory_id) FROM inventory
+SELECT COUNT(inventory_id), store_id FROM inventory
+WHERE film_id = 182;
 
+SELECT store_id FROM inventory
+WHERE film_id = 182;
+
+SELECT address_id FROM store
+WHERE store_id = 1;
+
+SELECT address FROM address
+WHERE address_id = 1;
+
+--2.11
+/* Odnaleźć dane (imię i nazwisko) klientów, 
+którzy wypożyczyli ten film i sprawdzić czy go oddali.
+ */
+
+SELECT inventory_id FROM inventory
+WHERE film_id = 182;
+
+SELECT customer_id FROM rental
+WHERE inventory_id IN (832, 833);
+
+SELECT first_name, last_name FROM customer
+WHERE customer_id IN (470, 337, 430, 256, 325, 102, 259);
+
+--2.12
+/* Sprawdzić czy są nadal aktywnymi klientami.*/
+
+SELECT active FROM customer
+WHERE customer_id IN (470, 337, 430, 256, 325, 102, 259);
+
+-- wszyscy są aktywni
+
+--2.13
+SELECT address_id FROM customer
+WHERE customer_id IN (470, 337, 430, 256, 325, 102, 259);
+
+SELECT phone FROM address
+WHERE address_id IN (106, 261, 264, 330, 342, 435, 475);
+
+--2.14
+/* 
+Która aktorka o imieniu PENELOPE 
+zagrała w największej liczbie filmów dostępnych w naszej bazie danych?
+*/
+
+SELECT actor_id FROM actor
+WHERE first_name LIKE 'PENELOPE';
+
+SELECT actor_id, COUNT(film_id) AS film_counter FROM film_actor
+WHERE actor_id IN (1, 54, 104, 120)
+GROUP BY actor_id
+ORDER BY film_counter DESC
+LIMIT 1;
+
+SELECT first_name, last_name FROM actor
+WHERE actor_id = 104;
+
+--2.15
+/* 
+Mamy tylko dwóch pracowników. 
+Opierając się wyłącznie na wartości wypożyczeń (amount) określ, 
+który z nich
+zarobił więcej dla firmy.
+*/
+
+SELECT staff_id, SUM(amount) as suma FROM payment
+GROUP BY staff_id
+ORDER BY suma DESC
+LIMIT 1;
+
+SELECT first_name, last_name FROM staff
+WHERE staff_id = 2;
+
+--2.16
+/*
+Sprawdź czy podobny wynik będzie, 
+gdy ograniczymy się do wakacji 2005 (od 1 lipca do 31 sierpnia).
+*/
+
+SELECT staff_id, SUM(amount) as suma FROM payment
+WHERE payment_date BETWEEN '2005-07-01 00:00:00' 
+                     AND '2005-08-31 23:59:59'
+GROUP BY staff_id
+ORDER BY suma DESC
+LIMIT 1;
+
+SELECT first_name, last_name FROM staff
+WHERE staff_id = 2;
+
+--2.17
+/*
+Sprawdzić ilu klientów ma email poza naszą domeną 
+(sakilacustomer.org) i jakie to domeny.
+*/
+
+SELECT COUNT(customer_id) FROM customer
+WHERE email NOT LIKE '%sakilacustomer.org';
+
+--2.18
+/*
+Sprawdzić ilu aktywnych klientów 
+ma nasza placówka o numerze 1, a ilu nasza druga placówka.
+*/
+
+SELECT store_id, COUNT(customer_id) FROM customer
+WHERE active = 1
+GROUP BY store_id; 
+
+--2.19
+/*
+Sprawdzić ile płyt nie zostało jeszcze zwróconych, 
+które wypożyczył pracownik numer 1, a ile w przypadku
+pracownika numer 2. Zastanowić się czy 
+jesteśmy w stanie sprawdzić te informacje dla naszych placówek.
+*/
+
+SELECT staff_id, COUNT(rental_id) FROM rental
+WHERE return_date IS NULL OR return_date = ''
+GROUP BY staff_id;
+
+SELECT store_id, staff_id FROM staff;
+
+-- W sklepie 1 pracuje tylko pracownik 1, a w sklepie 2 tylko 2,
+-- więc możemy to powiązać
+
+--2.20
+/* 
+Określić datę najdłuższego, niezwróconego jeszcze 
+wypożyczenia i znaleźć numer telefonu do klienta, który
+przetrzymuje ten film.
+*/
+SELECT customer_id FROM rental
+WHERE return_date IS NULL OR return_date = ''
+ORDER BY rental_date
+LIMIT 1;
+
+SELECT address_id FROM customer
+WHERE customer_id = 554;
+
+SELECT phone FROM address 
+WHERE address_id = 560;
