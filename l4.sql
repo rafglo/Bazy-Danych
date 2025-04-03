@@ -41,8 +41,8 @@ GROUP BY amount, staff_id
 ORDER BY zarobek DESC;
 
 --4.6
-SELECT MIN(IF(return_date IS NULL, 0, TIMESTAMPDIFF(SECOND, rental_date, return_date))) AS najkrotsze, 
-MAX(IF(return_date IS NULL,TIMESTAMPDIFF(SECOND, rental_date, '2005-09-02 02:35:22') , TIMESTAMPDIFF(SECOND, rental_date, return_date))) AS najdluzsze
+SELECT MIN(TIMESTAMPDIFF(SECOND, rental_date, return_date)) AS najkrotsze, 
+MAX(TIMESTAMPDIFF(SECOND, rental_date, return_date)) AS najdluzsze
 FROM rental
 WHERE return_date IS NOT NULL;
 
