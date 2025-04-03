@@ -48,16 +48,17 @@ WHERE return_date IS NOT NULL;
 
 --4.7
 SELECT customer_id, 
-AVG(IF(return_date IS NULL,TIMESTAMPDIFF(SECOND, rental_date, '2005-09-02 02:35:22') , TIMESTAMPDIFF(SECOND, rental_date, return_date))) / 86400 AS sredni_czas_dni
+AVG(TIMESTAMPDIFF(SECOND, rental_date, return_date)) / 86400 AS sredni_czas_dni
 FROM rental
 GROUP BY customer_id
-ORDER BY sredni_czas DESC
+ORDER BY sredni_czas_dni DESC
 LIMIT 1;
 
 --4.8
 SELECT customer_id, 
-SUM(IF(return_date IS NULL,TIMESTAMPDIFF(SECOND, rental_date, '2005-09-02 02:35:22') , TIMESTAMPDIFF(SECOND, rental_date, return_date)) / 2629800) AS w_sumie_miesiecy
+SUM(TIMESTAMPDIFF(SECOND, rental_date, return_date)) / 2629800 AS w_sumie_miesiecy
 FROM rental
+WHERE rental_date IS NOT NULL
 GROUP BY customer_id
-ORDER BY w_sumie DESC
+ORDER BY w_sumie_miesiecy DESC
 LIMIT 1;
