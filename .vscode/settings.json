@@ -9,20 +9,6 @@
             "server": "giniewicz.it",
             "port": 3306,
             "driver": "MariaDB",
-            "name": "zajecia",
-            "database": "sakila",
-            "username": "student",
-            "password": "57u>3n7"
-        },
-        {
-            "mysqlOptions": {
-                "authProtocol": "default",
-                "enableSsl": "Disabled"
-            },
-            "previewLimit": 50,
-            "server": "giniewicz.it",
-            "port": 3306,
-            "driver": "MariaDB",
             "name": "ZAJECIA",
             "database": "employees",
             "username": "student",
@@ -39,6 +25,20 @@
             "driver": "MariaDB",
             "name": "zajecia_nortwind",
             "database": "northwind",
+            "username": "student",
+            "password": "57u>3n7"
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "giniewicz.it",
+            "port": 3306,
+            "driver": "MariaDB",
+            "name": "zajecia_sakila",
+            "database": "sakila",
             "username": "student",
             "password": "57u>3n7"
         }
