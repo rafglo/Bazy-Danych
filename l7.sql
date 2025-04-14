@@ -67,3 +67,19 @@ INNER JOIN
 ON
     staff.staff_id = rental.staff_id
 GROUP BY id_sklepu, id_pracownika
+
+--7.6
+SELECT 
+    actor.fist_name
+    actor.last_name
+    film
+FROM    
+    address
+INNER JOIN
+    city
+ON
+    address.city_id = city.city_id
+INNER JOIN
+    country
+ON
+    city.country_id = country.country_id;
