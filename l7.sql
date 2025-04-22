@@ -70,16 +70,35 @@ GROUP BY id_sklepu, id_pracownika
 
 --7.6
 SELECT 
-    actor.fist_name
-    actor.last_name
-    film
+    actor.first_name,
+    actor.last_name,
+    GROUP_CONCAT(film.title SEPARATOR ', ') AS 'Tytuły filmów'
 FROM    
-    address
+    actor
 INNER JOIN
-    city
+    film_actor
 ON
-    address.city_id = city.city_id
+    actor.actor_id = film_actor.actor_id
 INNER JOIN
-    country
+    film
 ON
-    city.country_id = country.country_id;
+    film_actor.film_id = film.film_id
+GROUP BY actor.actor_id;
+
+--7.7
+SELECT DISTINCT
+    actor.first_name,
+    actor.last_name
+FROM    
+    actor
+INNER JOIN
+    film_actor
+ON
+    actor.actor_id = film_actor.actor_id
+INNER JOIN
+    film
+ON
+    film_actor.film_id = film.film_id
+WHERE film.title LIKE '%BLOOD%';
+
+--7.8
