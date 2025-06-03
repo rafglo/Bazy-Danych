@@ -1,0 +1,189 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dineug/erd-editor/main/json-schema/schema.json",
+  "version": "3.0.0",
+  "settings": {
+    "width": 2000,
+    "height": 2000,
+    "scrollTop": 0,
+    "scrollLeft": 0,
+    "zoomLevel": 1,
+    "show": 431,
+    "database": 4,
+    "databaseName": "",
+    "canvasType": "@dineug/erd-editor/builtin-schema-sql",
+    "language": 1,
+    "tableNameCase": 4,
+    "columnNameCase": 2,
+    "bracketType": 1,
+    "relationshipDataTypeSync": true,
+    "relationshipOptimization": false,
+    "columnOrder": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32,
+      64
+    ],
+    "maxWidthComment": -1,
+    "ignoreSaveSettings": 0
+  },
+  "doc": {
+    "tableIds": [
+      "CNxhp3JVNK4Ju1ixYtpmq",
+      "-A-EhY3v75PvL9_x-104a"
+    ],
+    "relationshipIds": [
+      "IS6I39r0NHs4mIPHeYA1N"
+    ],
+    "indexIds": [],
+    "memoIds": []
+  },
+  "collections": {
+    "tableEntities": {
+      "CNxhp3JVNK4Ju1ixYtpmq": {
+        "id": "CNxhp3JVNK4Ju1ixYtpmq",
+        "name": "pracownicy",
+        "comment": "",
+        "columnIds": [
+          "waQqgry--lXPHhhgdphkk"
+        ],
+        "seqColumnIds": [
+          "waQqgry--lXPHhhgdphkk"
+        ],
+        "ui": {
+          "x": 132,
+          "y": 64,
+          "zIndex": 2,
+          "widthName": 62,
+          "widthComment": 60,
+          "color": ""
+        },
+        "meta": {
+          "updateAt": 1748890175076,
+          "createAt": 1748889252827
+        }
+      },
+      "-A-EhY3v75PvL9_x-104a": {
+        "id": "-A-EhY3v75PvL9_x-104a",
+        "name": "cos",
+        "comment": "",
+        "columnIds": [
+          "VpOQtf-ZR8P_1IKks_CmT"
+        ],
+        "seqColumnIds": [
+          "FHRYof2PXvDxhSpOclJYn",
+          "VpOQtf-ZR8P_1IKks_CmT"
+        ],
+        "ui": {
+          "x": 338,
+          "y": 279,
+          "zIndex": 14,
+          "widthName": 60,
+          "widthComment": 60,
+          "color": ""
+        },
+        "meta": {
+          "updateAt": 1748890208249,
+          "createAt": 1748890069042
+        }
+      }
+    },
+    "tableColumnEntities": {
+      "waQqgry--lXPHhhgdphkk": {
+        "id": "waQqgry--lXPHhhgdphkk",
+        "tableId": "CNxhp3JVNK4Ju1ixYtpmq",
+        "name": "id",
+        "comment": "",
+        "dataType": "TINYINT",
+        "default": "",
+        "options": 10,
+        "ui": {
+          "keys": 1,
+          "widthName": 60,
+          "widthComment": 60,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1748890066065,
+          "createAt": 1748890056837
+        }
+      },
+      "FHRYof2PXvDxhSpOclJYn": {
+        "id": "FHRYof2PXvDxhSpOclJYn",
+        "tableId": "-A-EhY3v75PvL9_x-104a",
+        "name": "id",
+        "comment": "",
+        "dataType": "",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 60,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1748890096766,
+          "createAt": 1748890084811
+        }
+      },
+      "VpOQtf-ZR8P_1IKks_CmT": {
+        "id": "VpOQtf-ZR8P_1IKks_CmT",
+        "tableId": "-A-EhY3v75PvL9_x-104a",
+        "name": "id",
+        "comment": "",
+        "dataType": "TINYINT",
+        "default": "",
+        "options": 8,
+        "ui": {
+          "keys": 2,
+          "widthName": 60,
+          "widthComment": 60,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1748890110959,
+          "createAt": 1748890110957
+        }
+      }
+    },
+    "relationshipEntities": {
+      "IS6I39r0NHs4mIPHeYA1N": {
+        "id": "IS6I39r0NHs4mIPHeYA1N",
+        "identification": false,
+        "relationshipType": 2,
+        "startRelationshipType": 2,
+        "start": {
+          "tableId": "CNxhp3JVNK4Ju1ixYtpmq",
+          "columnIds": [
+            "waQqgry--lXPHhhgdphkk"
+          ],
+          "x": 497,
+          "y": 104,
+          "direction": 2
+        },
+        "end": {
+          "tableId": "-A-EhY3v75PvL9_x-104a",
+          "columnIds": [
+            "VpOQtf-ZR8P_1IKks_CmT"
+          ],
+          "x": 520.5,
+          "y": 279,
+          "direction": 4
+        },
+        "meta": {
+          "updateAt": 1748890110959,
+          "createAt": 1748890110959
+        }
+      }
+    },
+    "indexEntities": {},
+    "indexColumnEntities": {},
+    "memoEntities": {}
+  }
+}

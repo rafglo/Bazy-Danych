@@ -41,6 +41,20 @@
             "database": "sakila",
             "username": "student",
             "password": "57u>3n7"
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "giniewicz.it",
+            "port": 3306,
+            "driver": "MariaDB",
+            "name": "projekt",
+            "database": "team13",
+            "username": "team13",
+            "password": "te@mlie"
         }
     ]
 }
