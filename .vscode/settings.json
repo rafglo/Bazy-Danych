@@ -55,6 +55,20 @@
             "database": "team13",
             "username": "team13",
             "password": "te@mlie"
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "giniewicz.it",
+            "port": 3306,
+            "driver": "MariaDB",
+            "name": "piaskownica",
+            "database": "piaskownica",
+            "username": "student",
+            "password": "57u>3n7"
         }
     ]
 }
