@@ -29,6 +29,7 @@ SELECT * FROM sakila.film_category;
 CREATE TEMPORARY TABLE customer_276020 AS
 SELECT * FROM sakila.customer;
 
+SELECT * FROM film_actor_276020;
 -- 8.3
 INSERT INTO actor_276020 (imię, nazwisko) VALUES
 ('Ryszard', 'Kotys'),
@@ -78,11 +79,94 @@ WHERE imię = "Sandra" AND nazwisko = "Kilmer";
 
 --8.7
 ALTER TABLE actor_276020
-ADD COLUMN
-    played_in_1 = 1
+ADD COLUMN played_in_1 TINYINT(1) NOT NULL DEFAULT 0;
+
+UPDATE actor_276020
+SET played_in_1 = 
+    CASE
+        WHEN actor_id IN (
+            SELECT actor_id FROM film_actor_276020 WHERE film_id = 1
+            ) 
+            THEN 1
+        ELSE 0
+    END;
+
+--8.8
+CREATE TEMPORARY TABLE rental_valentine_276020 AS
+SELECT *
+FROM sakila.rental
+WHERE DATE(rental_date) = '2006-02-14';
+
+UPDATE rental_valentine_276020
+JOIN 
+    sakila.inventory
+ON
+    rental_valentine_276020.inventory_id = inventory.inventory_id
+JOIN
+    sakila.film
+ON 
+    inventory.film_id = film.film_id
+SET return_date = NOW()
 WHERE
-    actor_id IN (
-        SELECT fa.actor_id
-        FROM film_actor_276020 fa
-        WHERE fa.film_id = 1
-    );
+    film.title = 'CREATURES SHAKESPEARE';
+
+--8.9
+UPDATE film_276020
+SET rental_rate = FLOOR(rental_rate * 1.2) + 0.99;
+
+SELECT rental_rate FROM film_276020;
+
+--8.10
+UPDATE customer_276020
+SET active =
+    CASE
+        WHEN customer_id IN (
+            SELECT customer_id FROM rental_valentine_276020
+        ) THEN 1
+        ELSE 0
+    END;
+
+--8.11
+DELETE FROM actor_276020
+ORDER BY actor_id DESC
+LIMIT 1;
+
+SELECT * FROM actor_276020;
+
+--8.12
+DELETE f
+FROM film_276020 AS f
+JOIN
+    film_category_276020
+ON 
+    f.film_id = film_category_276020.film_id
+JOIN
+    category_276020
+ON
+    film_category_276020.category_id = category_276020.category_id
+WHERE
+    category_276020.name = 'Drama';
+
+--8.13
+DELETE actor_276020
+FROM
+    actor_276020
+LEFT JOIN
+    film_actor_276020 
+ON 
+    actor_276020.actor_id = film_actor_276020.actor_id
+WHERE
+    film_actor_276020.actor_id IS NULL;
+
+--8.14
+DELETE actor_276020, film_actor_276020
+FROM
+    actor_276020
+LEFT JOIN
+    film_actor_276020
+ON
+    actor_276020.actor_id = film_actor_276020.actor_id
+WHERE
+    LEFT(actor_276020.imię,1) = LEFT(actor_276020.nazwisko, 1);
+
+
