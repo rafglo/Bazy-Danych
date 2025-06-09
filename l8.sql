@@ -7,8 +7,8 @@ CREATE TEMPORARY TABLE actor_276020 (
     PRIMARY KEY (actor_id)
 );
 
-INSERT INTO actor_276020 (imię, nazwisko)
-SELECT first_name, last_name
+INSERT INTO actor_276020 (actor_id, imię, nazwisko, last_update)
+SELECT actor_id, first_name, last_name, last_update
 FROM sakila.actor;
 
 SELECT * FROM actor_276020;
@@ -29,17 +29,11 @@ SELECT * FROM sakila.film_category;
 CREATE TEMPORARY TABLE customer_276020 AS
 SELECT * FROM sakila.customer;
 
-SELECT * FROM film_actor_276020;
 -- 8.3
 INSERT INTO actor_276020 (imię, nazwisko) VALUES
 ('Ryszard', 'Kotys'),
 ('Andrzej', 'Grabowski'),
 ('Dariusz', 'Gnatowski');
-
-SELECT *
-FROM actor_276020
-ORDER BY actor_id DESC
-LIMIT 3;
 
 --8.4
 CREATE TEMPORARY TABLE fav_film_fans_276020 AS
@@ -73,7 +67,9 @@ ADD COLUMN film_fan_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;
 --8.6
 UPDATE actor_276020
 SET nazwisko = (
-    SELECT nazwisko FROM actor_276020 WHERE actor_id = 25
+    SELECT nazwisko 
+    FROM actor_276020 
+    WHERE actor_id = 25
 )
 WHERE imię = "Sandra" AND nazwisko = "Kilmer";
 
@@ -85,7 +81,9 @@ UPDATE actor_276020
 SET played_in_1 = 
     CASE
         WHEN actor_id IN (
-            SELECT actor_id FROM film_actor_276020 WHERE film_id = 1
+            SELECT actor_id 
+            FROM film_actor_276020 
+            WHERE film_id = 1
             ) 
             THEN 1
         ELSE 0
@@ -118,28 +116,28 @@ SELECT rental_rate FROM film_276020;
 
 --8.10
 UPDATE customer_276020
-SET active =
-    CASE
-        WHEN customer_id IN (
-            SELECT customer_id FROM rental_valentine_276020
-        ) THEN 1
-        ELSE 0
-    END;
+SET active = 0
+WHERE customer_id NOT IN (
+    SELECT customer_id 
+    FROM rental_valentine_276020
+);
 
 --8.11
 DELETE FROM actor_276020
 ORDER BY actor_id DESC
 LIMIT 1;
 
-SELECT * FROM actor_276020;
+SELECT * FROM actor_276020
+ORDER BY actor_id DESC
+LIMIT 3;
 
 --8.12
-DELETE f
-FROM film_276020 AS f
+DELETE film_276020
+FROM film_276020
 JOIN
     film_category_276020
 ON 
-    f.film_id = film_category_276020.film_id
+    film_276020.film_id = film_category_276020.film_id
 JOIN
     category_276020
 ON
