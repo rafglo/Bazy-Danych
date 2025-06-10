@@ -205,59 +205,78 @@ ORDER BY rental.rental_date;
 
 --7.11
 SELECT
-    actor.first_name,
-    actor.last_name
+    customer.first_name AS customer_first_name,
+    customer.last_name AS customer_last_name,
+    actor.first_name AS actor_first_name,
+    actor.last_name AS actor_last_name
 FROM
     actor
 JOIN
-    film_actor
-ON
-    actor.actor_id = film_actor.actor_id
+    film_actor ON actor.actor_id = film_actor.actor_id
 JOIN
-    inventory
-ON
-    film_actor.film_id = inventory.film_id
+    inventory ON film_actor.film_id = inventory.film_id
 JOIN
-    rental
-ON
-    inventory.inventory_id = rental.inventory_id
+    rental ON inventory.inventory_id = rental.inventory_id
+JOIN
+    customer ON rental.customer_id = customer.customer_id
 WHERE rental.customer_id = (
-    SELECT 
-    customer.customer_id
-FROM
-    customer
-JOIN
-    payment
-ON 
-    customer.customer_id = payment.customer_id
-GROUP BY customer.customer_id
-ORDER BY SUM(payment.amount) DESC
-LIMIT 1
+    SELECT
+        payment.customer_id
+    FROM
+        payment
+    GROUP BY
+        payment.customer_id
+    ORDER BY
+        SUM(payment.amount) DESC
+    LIMIT 1
 )
-GROUP BY actor.actor_id
-ORDER BY COUNT(*) DESC
+GROUP BY
+    customer.customer_id, customer.first_name, customer.last_name, actor.actor_id, actor.first_name, actor.last_name
+ORDER BY
+    COUNT(actor.actor_id) DESC
 LIMIT 1;
 
 
 --7.12
 SELECT
+    customer.store_id,
     city.city,
-    store.store_id,
-    SUM(payment.amount)
+    SUM(payment.amount) AS total_amount
 FROM
-    city
-JOIN
-    address
-ON
-    address.city_id = city.city_id
-JOIN
-    customer
-ON
-    address.address_id = customer.address_id
-JOIN
     payment
-ON
-    store.manager_staff_id = payment.staff_id
-GROUP BY store.store_id;
+JOIN
+    customer 
+ON 
+    payment.customer_id = customer.customer_id
+JOIN
+    address 
+ON 
+    customer.address_id = address.address_id
+JOIN
+    city
+ON 
+    address.city_id = city.city_id
+GROUP BY
+    customer.store_id, city.city
+ORDER BY
+    customer.store_id, total_amount DESC;
 
-
+--7.13
+SELECT
+    address.address_id
+FROM
+    address
+LEFT JOIN
+    customer
+ON 
+    address.address_id = customer.address_id
+LEFT JOIN
+    staff 
+ON 
+    address.address_id = staff.address_id
+LEFT JOIN
+    store 
+ON 
+    address.address_id = store.address_id
+WHERE
+    customer.customer_id IS NULL AND staff.staff_id IS NULL AND store.store_id IS NULL;
